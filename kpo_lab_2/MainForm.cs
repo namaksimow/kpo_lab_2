@@ -1,9 +1,14 @@
 namespace kpo_lab_2;
 
-public partial class Form1 : Form
+public partial class MainForm : Form
 {
-    public Form1()
+    public MainForm()
     {
         InitializeComponent();
+    }
+
+    private void btnLoad_Click(object sender, EventArgs e)
+    {
+        
     }
 }
