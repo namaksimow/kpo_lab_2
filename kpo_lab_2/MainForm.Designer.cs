@@ -33,12 +33,12 @@ partial class MainForm
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         btnLoad = new System.Windows.Forms.Button();
         tvData = new System.Windows.Forms.TreeView();
-        performerContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
-        performerToolStripMenuItemCreate = new System.Windows.Forms.ToolStripMenuItem();
-        performerToolStripMenuItemUpdate = new System.Windows.Forms.ToolStripMenuItem();
-        performerToolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+        contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+        toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+        toolStripMenuItemUpdate = new System.Windows.Forms.ToolStripMenuItem();
+        toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
         imgListIcon = new System.Windows.Forms.ImageList(components);
-        performerContextMenuStrip.SuspendLayout();
+        contextMenuStrip.SuspendLayout();
         SuspendLayout();
         // 
         // btnLoad
@@ -55,7 +55,7 @@ partial class MainForm
         // tvData
         // 
         tvData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-        tvData.ContextMenuStrip = performerContextMenuStrip;
+        tvData.ContextMenuStrip = contextMenuStrip;
         tvData.ImageIndex = 0;
         tvData.ImageList = imgListIcon;
         tvData.Location = new System.Drawing.Point(14, 10);
@@ -66,31 +66,31 @@ partial class MainForm
         // 
         // performerContextMenuStrip
         // 
-        performerContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] 
-            { performerToolStripMenuItemCreate,  performerToolStripMenuItemUpdate, performerToolStripMenuItemDelete });
-        performerContextMenuStrip.Name = "performerContextMenuStrip";
-        performerContextMenuStrip.Size = new System.Drawing.Size(181, 48);
+        contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] 
+            { toolStripMenuItemAdd,  toolStripMenuItemUpdate, toolStripMenuItemDelete });
+        contextMenuStrip.Name = "contextMenuStrip";
+        contextMenuStrip.Size = new System.Drawing.Size(181, 48);
         // 
         // performerToolStripMenuItemCreate
         // 
-        performerToolStripMenuItemCreate.Name = "performerToolStripMenuItemCreate";
-        performerToolStripMenuItemCreate.Size = new System.Drawing.Size(180, 22);
-        performerToolStripMenuItemCreate.Text = "Add performer";
-        performerToolStripMenuItemCreate.Click += PerformerContextMenuItemCreate;
+        toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+        toolStripMenuItemAdd.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemAdd.Text = "Add";
+        toolStripMenuItemAdd.Click += ContextMenuItemAdd;
         //
         // performerToolStripMenuItemUpdate
         //
-        performerToolStripMenuItemUpdate.Name = "performerToolStripMenuItemUpdate";
-        performerToolStripMenuItemUpdate.Size = new System.Drawing.Size(180, 22);
-        performerToolStripMenuItemUpdate.Text = "Update performer";
-        performerToolStripMenuItemUpdate.Click += PerformerContextMenuItemUpdate;
+        toolStripMenuItemUpdate.Name = "toolStripMenuItemUpdate";
+        toolStripMenuItemUpdate.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemUpdate.Text = "Update";
+        toolStripMenuItemUpdate.Click += ContextMenuItemUpdate;
         //
         // performerToolStripMenuItemDelete
         //
-        performerToolStripMenuItemDelete.Name = "performerToolStripMenuItemDelete";
-        performerToolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
-        performerToolStripMenuItemDelete.Text = "Delete performer";
-        performerToolStripMenuItemDelete.Click += PerformerContextMenuItemDelete;
+        toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
+        toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemDelete.Text = "Delete";
+        toolStripMenuItemDelete.Click += ContextMenuItemDelete;
         // 
         // imgListIcon
         // 
@@ -108,17 +108,17 @@ partial class MainForm
         Controls.Add(tvData);
         Controls.Add(btnLoad);
         Text = "MusicBase";
-        performerContextMenuStrip.ResumeLayout(false);
+        contextMenuStrip.ResumeLayout(false);
         ResumeLayout(false);
     }
     
-    private System.Windows.Forms.ToolStripMenuItem performerToolStripMenuItemDelete;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDelete;
     
-    private System.Windows.Forms.ToolStripMenuItem performerToolStripMenuItemUpdate;
-    
-    private System.Windows.Forms.ToolStripMenuItem performerToolStripMenuItemCreate;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemUpdate;
 
-    public static System.Windows.Forms.ContextMenuStrip performerContextMenuStrip;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdd;
+
+    public static System.Windows.Forms.ContextMenuStrip contextMenuStrip;
 
     private System.Windows.Forms.ImageList imgListIcon;
 

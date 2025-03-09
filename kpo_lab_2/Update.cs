@@ -2,14 +2,14 @@
 
 namespace kpo_lab_2;
 
-public partial class PerformerUpdate : Form
+public partial class Update : Form
 {
     private readonly ApplicationContext _context;
     private string _oldData;
     private string _newData;
     private bool _isCheck;
     
-    public PerformerUpdate(ApplicationContext context, string oldData)
+    public Update(ApplicationContext context, string oldData)
     {
         _oldData = oldData;
         _context = context;
@@ -22,7 +22,7 @@ public partial class PerformerUpdate : Form
 
         if (string.IsNullOrEmpty(newNickname))
         {
-            MessageBox.Show("invalid new data");
+            MessageBox.Show(@"invalid new data");
             return;
         }
         
@@ -30,11 +30,11 @@ public partial class PerformerUpdate : Form
 
         if (performer != null)
         {
-            MessageBox.Show("This record already exists");
+            MessageBox.Show(@"This record already exists");
             return;
         }
         
-        MessageBox.Show("Suitable data");
+        MessageBox.Show(@"Suitable data");
         _newData = newNickname;
         _isCheck = true;
     }
@@ -49,28 +49,19 @@ public partial class PerformerUpdate : Form
     {
         if (!_isCheck)
         {
-            MessageBox.Show("Check data before update");
+            MessageBox.Show(@"Check data before update");
             return;
         }
         
         var performer = _context.Performers.FirstOrDefault(p => p.Nickname == _oldData);
-        /*performer.Nickname = _newData;
-        
-        _context.Performers.Update(performer);
-        _context.SaveChanges();
-        MessageBox.Show("Performer changed");
-        _oldData = "";
-        _newData = "";
-        _isCheck = false;
-        Close();*/
-        performer.Nickname = _newData; // Сначала обновляем
+        performer.Nickname = _newData; 
 
         _context.Performers.Update(performer);
         _context.SaveChanges();
 
-        MainForm.UpdatePerformerInTree(_oldData, performer.Nickname); // Затем передаем обновленные данные
+        MainForm.UpdatePerformerInTree(_oldData, performer.Nickname); 
 
-        MessageBox.Show("Performer changed");
+        MessageBox.Show(@"Performer changed");
         _oldData = "";
         _newData = "";
         _isCheck = false;

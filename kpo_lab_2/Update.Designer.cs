@@ -2,7 +2,7 @@
 
 namespace kpo_lab_2;
 
-partial class PerformerUpdate
+partial class Update
 {
     /// <summary>
     /// Required designer variable.

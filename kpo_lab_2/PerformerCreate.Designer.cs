@@ -38,7 +38,6 @@ partial class PerformerCreate
         txtBoxSurname = new System.Windows.Forms.TextBox();
         txtBoxNickname = new System.Windows.Forms.TextBox();
         btnAddPerformer = new System.Windows.Forms.Button();
-        btnCheckPerformer = new System.Windows.Forms.Button();
         btnCancelPerformer = new System.Windows.Forms.Button();
         SuspendLayout();
         // 
@@ -97,19 +96,9 @@ partial class PerformerCreate
         btnAddPerformer.UseVisualStyleBackColor = true;
         btnAddPerformer.Click += btnAddPerformer_Click;
         // 
-        // btnCheckPerformer
-        // 
-        btnCheckPerformer.Location = new System.Drawing.Point(183, 116);
-        btnCheckPerformer.Name = "btnCheckPerformer";
-        btnCheckPerformer.Size = new System.Drawing.Size(101, 28);
-        btnCheckPerformer.TabIndex = 7;
-        btnCheckPerformer.Text = "Check";
-        btnCheckPerformer.UseVisualStyleBackColor = true;
-        btnCheckPerformer.Click += btnCheckPerformer_Click;
-        // 
         // btnCancelPerformer
         // 
-        btnCancelPerformer.Location = new System.Drawing.Point(76, 116);
+        btnCancelPerformer.Location = new System.Drawing.Point(118, 116);
         btnCancelPerformer.Name = "btnCancelPerformer";
         btnCancelPerformer.Size = new System.Drawing.Size(101, 28);
         btnCancelPerformer.TabIndex = 8;
@@ -117,13 +106,12 @@ partial class PerformerCreate
         btnCancelPerformer.UseVisualStyleBackColor = true;
         btnCancelPerformer.Click += btnCancelPerformer_Click;
         // 
-        // PerformerCud
+        // PerformerCreate
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(399, 154);
         Controls.Add(btnCancelPerformer);
-        Controls.Add(btnCheckPerformer);
         Controls.Add(btnAddPerformer);
         Controls.Add(txtBoxNickname);
         Controls.Add(txtBoxSurname);
@@ -140,7 +128,6 @@ partial class PerformerCreate
     private System.Windows.Forms.TextBox txtBoxSurname;
     private System.Windows.Forms.TextBox txtBoxNickname;
     private System.Windows.Forms.Button btnAddPerformer;
-    private System.Windows.Forms.Button btnCheckPerformer;
     private System.Windows.Forms.Button btnCancelPerformer;
 
     private System.Windows.Forms.Label lblSurname;
