@@ -32,9 +32,8 @@ partial class Update
     private void InitializeComponent()
     {
         lblNewData = new System.Windows.Forms.Label();
-        txtBoxPerformerNewNickname = new System.Windows.Forms.TextBox();
+        txtBoxNewData = new System.Windows.Forms.TextBox();
         btnPerformerNewDataUpdate = new System.Windows.Forms.Button();
-        btnPerformerNewDataCheck = new System.Windows.Forms.Button();
         btnPerformerNewDataCancel = new System.Windows.Forms.Button();
         SuspendLayout();
         // 
@@ -45,14 +44,14 @@ partial class Update
         lblNewData.Name = "lblNewData";
         lblNewData.Size = new System.Drawing.Size(94, 21);
         lblNewData.TabIndex = 2;
-        lblNewData.Text = "new Data";
+        lblNewData.Text = "New Data";
         // 
         // txtBoxPerformerNewNickname
         // 
-        txtBoxPerformerNewNickname.Location = new System.Drawing.Point(104, 9);
-        txtBoxPerformerNewNickname.Name = "txtBoxPerformerNewNickname";
-        txtBoxPerformerNewNickname.Size = new System.Drawing.Size(217, 23);
-        txtBoxPerformerNewNickname.TabIndex = 5;
+        txtBoxNewData.Location = new System.Drawing.Point(104, 9);
+        txtBoxNewData.Name = "txtBoxNewData";
+        txtBoxNewData.Size = new System.Drawing.Size(217, 23);
+        txtBoxNewData.TabIndex = 5;
         // 
         // btnPerformerNewDataUpdate
         // 
@@ -62,46 +61,33 @@ partial class Update
         btnPerformerNewDataUpdate.TabIndex = 6;
         btnPerformerNewDataUpdate.Text = "Update";
         btnPerformerNewDataUpdate.UseVisualStyleBackColor = true;
-        btnPerformerNewDataUpdate.Click += btnPerformerNewDataUpdate_Click;
-        // 
-        // btnPerformerNewDataCheck
-        // 
-        btnPerformerNewDataCheck.Location = new System.Drawing.Point(147, 38);
-        btnPerformerNewDataCheck.Name = "btnPerformerNewDataCheck";
-        btnPerformerNewDataCheck.Size = new System.Drawing.Size(84, 28);
-        btnPerformerNewDataCheck.TabIndex = 7;
-        btnPerformerNewDataCheck.Text = "Check";
-        btnPerformerNewDataCheck.UseVisualStyleBackColor = true;
-        btnPerformerNewDataCheck.Click += btnPerformerNewDataCheck_Click;
+        btnPerformerNewDataUpdate.Click += btnNewDataUpdate_Click;
         // 
         // btnPerformerNewDataCancel
         // 
-        btnPerformerNewDataCancel.Location = new System.Drawing.Point(57, 38);
+        btnPerformerNewDataCancel.Location = new System.Drawing.Point(104, 38);
         btnPerformerNewDataCancel.Name = "btnPerformerNewDataCancel";
         btnPerformerNewDataCancel.Size = new System.Drawing.Size(84, 28);
         btnPerformerNewDataCancel.TabIndex = 8;
         btnPerformerNewDataCancel.Text = "Cancel";
         btnPerformerNewDataCancel.UseVisualStyleBackColor = true;
-        btnPerformerNewDataCancel.Click += btnPerformerNewDataCancel_Click;
+        btnPerformerNewDataCancel.Click += btnNewDataCancel_Click;
         // 
-        // DataUpdate
+        // Update
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(333, 79);
         Controls.Add(btnPerformerNewDataCancel);
-        Controls.Add(btnPerformerNewDataCheck);
         Controls.Add(btnPerformerNewDataUpdate);
-        Controls.Add(txtBoxPerformerNewNickname);
+        Controls.Add(txtBoxNewData);
         Controls.Add(lblNewData);
         Text = "DataUpdate";
         ResumeLayout(false);
         PerformLayout();
     }
 
-    private System.Windows.Forms.Button btnPerformerNewDataCheck;
-
-    private System.Windows.Forms.TextBox txtBoxPerformerNewNickname;
+    private System.Windows.Forms.TextBox txtBoxNewData;
     private System.Windows.Forms.Button btnPerformerNewDataUpdate;
     private System.Windows.Forms.Button btnPerformerNewDataCancel;
 

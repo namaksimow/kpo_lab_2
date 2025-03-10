@@ -7,7 +7,6 @@ public partial class Update : Form
     private readonly ApplicationContext _context;
     private string _oldData;
     private string _newData;
-    private bool _isCheck;
     
     public Update(ApplicationContext context, string oldData)
     {
@@ -16,55 +15,38 @@ public partial class Update : Form
         InitializeComponent();
     }
 
-    private void btnPerformerNewDataCheck_Click(object sender, EventArgs e)
-    {
-        string newNickname = txtBoxPerformerNewNickname.Text;
-
-        if (string.IsNullOrEmpty(newNickname))
-        {
-            MessageBox.Show(@"invalid new data");
-            return;
-        }
-        
-        var performer = _context.Performers.FirstOrDefault(p => p.Nickname == newNickname);
-
-        if (performer != null)
-        {
-            MessageBox.Show(@"This record already exists");
-            return;
-        }
-        
-        MessageBox.Show(@"Suitable data");
-        _newData = newNickname;
-        _isCheck = true;
-    }
-
-    private void btnPerformerNewDataCancel_Click(object sender, EventArgs e)
+    private void btnNewDataCancel_Click(object sender, EventArgs e)
     {
         Close();
     }
 
 
-    private void btnPerformerNewDataUpdate_Click(object sender, EventArgs e)
+    private void btnNewDataUpdate_Click(object sender, EventArgs e)
     {
-        if (!_isCheck)
+        _newData = txtBoxNewData.Text;
+        var isPerformer = _context.Performers.FirstOrDefault(p => p.Nickname == _oldData);
+        if (isPerformer != null)
         {
-            MessageBox.Show(@"Check data before update");
-            return;
+            isPerformer.Nickname = _newData; 
+            _context.Performers.Update(isPerformer);
+            _context.SaveChanges();    
+            MainForm.UpdatePerformerInTree(_oldData, isPerformer.Nickname);
+            MessageBox.Show(@"Performer changed");
+        }
+
+        var isAlbum = _context.Albums.FirstOrDefault(a => a.Title == _oldData);
+        if (isAlbum != null)
+        {
+            isAlbum.Title = _newData;
+            MainForm.UpdateAlbumInTree(_oldData, isAlbum.Title);
+            _context.Albums.Update(isAlbum);
+            Console.WriteLine(isAlbum.Title);
+            _context.SaveChanges();
+            MessageBox.Show(@"Album changed");
         }
         
-        var performer = _context.Performers.FirstOrDefault(p => p.Nickname == _oldData);
-        performer.Nickname = _newData; 
-
-        _context.Performers.Update(performer);
-        _context.SaveChanges();
-
-        MainForm.UpdatePerformerInTree(_oldData, performer.Nickname); 
-
-        MessageBox.Show(@"Performer changed");
         _oldData = "";
         _newData = "";
-        _isCheck = false;
         Close();
     }
 }

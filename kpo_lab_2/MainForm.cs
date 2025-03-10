@@ -4,7 +4,7 @@ namespace kpo_lab_2;
 
 public partial class MainForm : Form
 {
-    private readonly ApplicationContext _context;
+    private static ApplicationContext _context;
     
     public MainForm(ApplicationContext context)
     {
@@ -116,9 +116,9 @@ public partial class MainForm : Form
             return;
         }
 
-        string performerNickname = tvData.SelectedNode.Text;
+        string tableContent = tvData.SelectedNode.Text;
 
-        Update updateForm = new Update(_context, performerNickname);
+        Update updateForm = new Update(_context, tableContent);
         updateForm.Show();
     }
 
@@ -147,9 +147,6 @@ public partial class MainForm : Form
             _context.Albums.Remove(isAlbum);
             _context.SaveChanges();
         }
-
-
-
     }
     
     public void RemovePerformerFromTree(Performer performer)
@@ -220,7 +217,22 @@ public partial class MainForm : Form
 
         if (nodeToRemove != null)
         {
-            tvData.Nodes.Remove(nodeToRemove);
+            nodePerformer.Nodes.Remove(nodeToRemove);
         }
+    }
+    
+    public static void UpdateAlbumInTree(string oldTitle, string newTitle)
+    {
+        var oldAlbum = _context.Albums.FirstOrDefault(a => a.Title == oldTitle);
+        int oldAlbumPerformerId = oldAlbum.PerformerId;
+        var performer = _context.Performers.FirstOrDefault(p => p.Id == oldAlbumPerformerId);
+        
+        TreeNode? parentNode = tvData.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == performer.Nickname);
+        
+        TreeNode? nodeToChange = parentNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == oldTitle);
+        
+        nodeToChange.Text = newTitle;
     }
 }
