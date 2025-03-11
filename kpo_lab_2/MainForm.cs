@@ -105,7 +105,12 @@ public partial class MainForm : Form
             createForm.Show();
         }
         
-        
+        var isSong = _context.Songs.FirstOrDefault(s => s.Title == tableContent);
+        if (isSong != null)
+        {
+            SongCreate createForm = new SongCreate(_context);
+            createForm.Show();
+        }
         
     }
 
@@ -145,6 +150,14 @@ public partial class MainForm : Form
             
             RemoveAlbumFromTree(performer.Nickname, isAlbum);
             _context.Albums.Remove(isAlbum);
+            _context.SaveChanges();
+        }
+        
+        var isSong = _context.Songs.FirstOrDefault(s => s.Title == tableContent);
+        if (isSong != null)
+        {
+            RemoveSongFromTree(isSong);
+            _context.Songs.Remove(isSong);
             _context.SaveChanges();
         }
     }
@@ -234,5 +247,66 @@ public partial class MainForm : Form
             .FirstOrDefault(n => n.Text == oldTitle);
         
         nodeToChange.Text = newTitle;
+    }
+
+    public static void AddSongInTree(string albumTitle, Song song)
+    {
+        var album =  _context.Albums.FirstOrDefault(a => a.Title == albumTitle);
+        int albumPerformerId = album.PerformerId;
+        var performer = _context.Performers.FirstOrDefault(p => p.Id == albumPerformerId);
+        
+        TreeNode? performerNode = tvData.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == performer.Nickname);
+        
+        TreeNode? albumNode = performerNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == albumTitle);
+        
+        TreeNode songNode = new TreeNode(song.Title, 2, 2);
+        songNode.ContextMenuStrip = contextMenuStrip;
+        albumNode.Nodes.Add(songNode);
+    }
+
+    public static void RemoveSongFromTree(Song song)
+    {
+        int albumId = song.AlbumId;
+        var album = _context.Albums.FirstOrDefault(a => a.Id == albumId);
+        var performer = _context.Performers.FirstOrDefault(p => p.Id == album.PerformerId);
+        
+        TreeNode? performerNode = tvData.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == performer.Nickname);
+        
+        TreeNode? albumNode = performerNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == album.Title);
+        
+        TreeNode? songNode = albumNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == song.Title);
+        
+        albumNode.Nodes.Remove(songNode);
+    }
+
+    public static void UpdateSongInTree(string oldTitle, string newTitle)
+    {
+        Console.WriteLine($"{oldTitle} -> {newTitle}");
+        var oldSong = _context.Songs.FirstOrDefault(s => s.Title == oldTitle);
+        Console.WriteLine(oldSong.Title);
+        int albumId = oldSong.AlbumId;
+        Console.WriteLine(albumId);
+        var currentAlbum = _context.Albums.FirstOrDefault(a => a.Id == albumId);
+        Console.WriteLine(currentAlbum.Title);
+        int performerId = currentAlbum.PerformerId;
+        Console.WriteLine(performerId);
+        var performer = _context.Performers.FirstOrDefault(p => p.Id == performerId);
+        Console.WriteLine(performer.Nickname);
+        
+        TreeNode? performerNode = tvData.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == performer.Nickname);
+        
+        TreeNode? albumNode = performerNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == currentAlbum.Title);
+        
+        TreeNode? songNode = albumNode.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == oldTitle);
+        
+        songNode.Text = newTitle;
     }
 }

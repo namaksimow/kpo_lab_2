@@ -46,5 +46,6 @@ public partial class PerformerCreate : Form
         _context.SaveChanges();
         MainForm.AddPerformerInTree(performer);
         MessageBox.Show(@"Performer added");
+        Close();
     }
 }

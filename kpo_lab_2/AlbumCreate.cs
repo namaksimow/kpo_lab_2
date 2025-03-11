@@ -39,13 +39,12 @@ public partial class AlbumCreate : Form
         var albumFromNode = _context.Albums.FirstOrDefault(a => a.Title == performerAlbumTitle);
         int performerIdFromNodeAlbum = albumFromNode.PerformerId;
         var performerExist = _context.Performers.FirstOrDefault(p => p.Id == performerIdFromNodeAlbum);
-        
-        
         int performerId = performerExist.Id;
 
         Album album = new Album(albumTitle, performerId);
         _context.Albums.Add(album);
         _context.SaveChanges();
         MainForm.AddAlbumInTree(performerExist.Nickname, album);
+        Close();
     }
 }

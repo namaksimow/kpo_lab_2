@@ -9,4 +9,11 @@ public class Song
     public int AlbumId { get; set; }
     
     public string? Lyrics { get; set; }
+
+    public Song(string title, int albumId, string lyrics)
+    {
+        Title = title;
+        AlbumId = albumId;
+        Lyrics = lyrics;
+    }
 }

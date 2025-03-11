@@ -40,9 +40,18 @@ public partial class Update : Form
             isAlbum.Title = _newData;
             MainForm.UpdateAlbumInTree(_oldData, isAlbum.Title);
             _context.Albums.Update(isAlbum);
-            Console.WriteLine(isAlbum.Title);
             _context.SaveChanges();
             MessageBox.Show(@"Album changed");
+        }
+        
+        var isSong = _context.Songs.FirstOrDefault(s => s.Title == _oldData);
+        if (isSong != null)
+        {
+            isSong.Title = _newData;
+            MainForm.UpdateSongInTree(_oldData, isSong.Title);
+            _context.Songs.Update(isSong);
+            _context.SaveChanges();
+            MessageBox.Show(@"Song changed");
         }
         
         _oldData = "";
