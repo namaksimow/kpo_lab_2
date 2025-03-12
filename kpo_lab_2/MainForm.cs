@@ -338,17 +338,11 @@ public partial class MainForm : Form
 
     public static void UpdateSongInTree(string oldTitle, string newTitle)
     {
-        Console.WriteLine($"{oldTitle} -> {newTitle}");
         var oldSong = _context.Songs.FirstOrDefault(s => s.Title == oldTitle);
-        Console.WriteLine(oldSong.Title);
         int albumId = oldSong.AlbumId;
-        Console.WriteLine(albumId);
         var currentAlbum = _context.Albums.FirstOrDefault(a => a.Id == albumId);
-        Console.WriteLine(currentAlbum.Title);
         int performerId = currentAlbum.PerformerId;
-        Console.WriteLine(performerId);
         var performer = _context.Performers.FirstOrDefault(p => p.Id == performerId);
-        Console.WriteLine(performer.Nickname);
         
         TreeNode? performerNode = tvData.Nodes.Cast<TreeNode>()
             .FirstOrDefault(n => n.Text == performer.Nickname);
