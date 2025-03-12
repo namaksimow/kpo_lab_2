@@ -90,7 +90,8 @@ public partial class MainForm : Form
         }
 
         string tableContent = tvData.SelectedNode.Text;
-
+        Console.WriteLine(tableContent);
+        
         var isPerformer = _context.Performers.FirstOrDefault(p => p.Nickname == tableContent);
         if (isPerformer != null)
         {
@@ -161,16 +162,54 @@ public partial class MainForm : Form
             _context.SaveChanges();
         }
     }
-    
-    public void RemovePerformerFromTree(Performer performer)
-    {
-        TreeNode? nodeToRemove = tvData.Nodes.Cast<TreeNode>()
-            .FirstOrDefault(n => n.Text == performer.Nickname);
 
-        if (nodeToRemove != null)
+    private void ContextMenuItemAddIn(object sender, EventArgs e)
+    {
+        if (tvData.SelectedNode == null)
         {
-            tvData.Nodes.Remove(nodeToRemove);
+            return;
         }
+        
+        string tableContent = tvData.SelectedNode.Text;
+        
+        var isPerformer = _context.Performers.FirstOrDefault(p => p.Nickname == tableContent);
+        if (isPerformer != null)
+        {
+            AlbumCreate createForm = new AlbumCreate(_context);
+            createForm.Show();
+            return;
+        }
+        
+        var isAlbum = _context.Albums.FirstOrDefault(a => a.Title == tableContent);
+        if (isAlbum != null)
+        {
+            SongCreate createForm = new SongCreate(_context);
+            createForm.Show();
+            return;
+        }
+
+        MessageBox.Show(@"Songs dont have dependency's");
+    }
+    
+    public static void RemovePerformerFromTree(Performer performer)
+    {
+        TreeNode? nodePerformer = tvData.Nodes.Cast<TreeNode>()
+            .FirstOrDefault(n => n.Text == performer.Nickname);
+    
+        if (nodePerformer == null)
+            return;
+    
+        foreach (TreeNode albumNode in nodePerformer.Nodes.Cast<TreeNode>().ToList())
+        {
+            var album = _context.Albums.FirstOrDefault(a => a.Title == albumNode.Text);
+            if (album != null)
+            {
+                RemoveAlbumFromTree(performer.Nickname, album);
+                _context.Albums.Remove(album);
+                _context.SaveChanges();
+            }
+        }
+        tvData.Nodes.Remove(nodePerformer);
     }
     
     public static void UpdatePerformerInTree(string oldNickname, string newNickname)
@@ -224,12 +263,25 @@ public partial class MainForm : Form
     {
         TreeNode? nodePerformer = tvData.Nodes.Cast<TreeNode>()
             .FirstOrDefault(n => n.Text == performerNickname);
-        
+    
+        if (nodePerformer == null)
+            return;
+    
         TreeNode? nodeToRemove = nodePerformer.Nodes.Cast<TreeNode>()
             .FirstOrDefault(n => n.Text == album.Title);
-
+    
         if (nodeToRemove != null)
         {
+            foreach (TreeNode songNode in nodeToRemove.Nodes.Cast<TreeNode>().ToList())
+            {
+                var song = _context.Songs.FirstOrDefault(s => s.Title == songNode.Text && s.AlbumId == album.Id);
+                if (song != null)
+                {
+                    RemoveSongFromTree(song);
+                    _context.Songs.Remove(song);
+                    _context.SaveChanges();
+                }
+            }
             nodePerformer.Nodes.Remove(nodeToRemove);
         }
     }
@@ -308,5 +360,25 @@ public partial class MainForm : Form
             .FirstOrDefault(n => n.Text == oldTitle);
         
         songNode.Text = newTitle;
+    }
+
+    private void tvData_ItemDrag(object sender, EventArgs e)
+    {
+        
+    }
+    
+    private void tvData_DragEnter(object sender, DragEventArgs e)
+    {
+        
+    }
+
+    private void tvData_DragDrop(object sender, DragEventArgs e)
+    {
+        
+    }
+
+    private void tvData_DragOver(object sender, DragEventArgs e)
+    {
+        
     }
 }

@@ -37,6 +37,7 @@ partial class MainForm
         toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
         toolStripMenuItemUpdate = new System.Windows.Forms.ToolStripMenuItem();
         toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+        toolStripMenuItemAddIn = new System.Windows.Forms.ToolStripMenuItem();
         imgListIcon = new System.Windows.Forms.ImageList(components);
         contextMenuStrip.SuspendLayout();
         SuspendLayout();
@@ -54,6 +55,7 @@ partial class MainForm
         // 
         // tvData
         // 
+        tvData.AllowDrop = true;
         tvData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         tvData.ContextMenuStrip = contextMenuStrip;
         tvData.ImageIndex = 0;
@@ -63,34 +65,44 @@ partial class MainForm
         tvData.SelectedImageIndex = 0;
         tvData.Size = new System.Drawing.Size(647, 600);
         tvData.TabIndex = 1;
+        tvData.ItemDrag += new ItemDragEventHandler(tvData_ItemDrag);
+        tvData.DragEnter += new DragEventHandler(tvData_DragEnter);
+        tvData.DragOver += new DragEventHandler(tvData_DragOver);
+        tvData.DragDrop += new DragEventHandler(tvData_DragDrop);
         // 
-        // performerContextMenuStrip
+        // contextMenuStrip
         // 
-        contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] 
-            { toolStripMenuItemAdd,  toolStripMenuItemUpdate, toolStripMenuItemDelete });
+        contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItemAdd, toolStripMenuItemUpdate, toolStripMenuItemDelete, toolStripMenuItemAddIn });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new System.Drawing.Size(181, 48);
+        contextMenuStrip.Size = new System.Drawing.Size(113, 92);
         // 
-        // performerToolStripMenuItemCreate
+        // toolStripMenuItemAdd
         // 
         toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
-        toolStripMenuItemAdd.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemAdd.Size = new System.Drawing.Size(112, 22);
         toolStripMenuItemAdd.Text = "Add";
         toolStripMenuItemAdd.Click += ContextMenuItemAdd;
-        //
-        // performerToolStripMenuItemUpdate
-        //
+        // 
+        // toolStripMenuItemUpdate
+        // 
         toolStripMenuItemUpdate.Name = "toolStripMenuItemUpdate";
-        toolStripMenuItemUpdate.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemUpdate.Size = new System.Drawing.Size(112, 22);
         toolStripMenuItemUpdate.Text = "Update";
         toolStripMenuItemUpdate.Click += ContextMenuItemUpdate;
-        //
-        // performerToolStripMenuItemDelete
-        //
+        // 
+        // toolStripMenuItemDelete
+        // 
         toolStripMenuItemDelete.Name = "toolStripMenuItemDelete";
-        toolStripMenuItemDelete.Size = new System.Drawing.Size(180, 22);
+        toolStripMenuItemDelete.Size = new System.Drawing.Size(112, 22);
         toolStripMenuItemDelete.Text = "Delete";
         toolStripMenuItemDelete.Click += ContextMenuItemDelete;
+        // 
+        // toolStripMenuItemAddIn
+        // 
+        toolStripMenuItemAddIn.Name = "toolStripMenuItemAddIn";
+        toolStripMenuItemAddIn.Size = new System.Drawing.Size(112, 22);
+        toolStripMenuItemAddIn.Text = "Add In";
+        toolStripMenuItemAddIn.Click += ContextMenuItemAddIn;
         // 
         // imgListIcon
         // 
@@ -111,6 +123,8 @@ partial class MainForm
         contextMenuStrip.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAddIn;
     
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDelete;
     

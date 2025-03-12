@@ -37,15 +37,29 @@ public partial class SongCreate : Form
         }
         
         string songTitleFromAlbum = MainForm.tvData.SelectedNode.Text;
-        var songFromNode = _context.Songs.FirstOrDefault(s => s.Title == songTitleFromAlbum);
-        int albumId = songFromNode.AlbumId;
-        var albumExist = _context.Albums.FirstOrDefault(a => a.Id == albumId);
+        Console.WriteLine(songTitleFromAlbum);
+        var albumFromNode = _context.Albums.FirstOrDefault(a => a.Title == songTitleFromAlbum);
+        if (albumFromNode != null)
+        {
+            Song song = new Song(title, albumFromNode.Id, lyrics);
+            _context.Songs.Add(song);
+            _context.SaveChanges();
+            MainForm.AddSongInTree(albumFromNode.Title, song);
+            MessageBox.Show("Song created");
+            Close();    
+        }
+        else
+        {
+            var songFromNode = _context.Songs.FirstOrDefault(s => s.Title == songTitleFromAlbum);
+            int albumId = songFromNode.AlbumId;
+            var albumExist = _context.Albums.FirstOrDefault(a => a.Id == albumId);
 
-        Song song = new Song(title, albumId, lyrics);
-        _context.Songs.Add(song);
-        _context.SaveChanges();
-        MainForm.AddSongInTree(albumExist.Title, song);
-        MessageBox.Show("Song created");
-        Close();
+            Song song = new Song(title, albumId, lyrics);
+            _context.Songs.Add(song);
+            _context.SaveChanges();
+            MainForm.AddSongInTree(albumExist.Title, song);
+            MessageBox.Show("Song created");
+            Close();    
+        }
     }
 }
