@@ -362,23 +362,94 @@ public partial class MainForm : Form
         songNode.Text = newTitle;
     }
 
-    private void tvData_ItemDrag(object sender, EventArgs e)
+    private void tvData_ItemDrag(object sender, ItemDragEventArgs e)
     {
-        
+        if (e.Button == MouseButtons.Left)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Move);
+        }
     }
     
     private void tvData_DragEnter(object sender, DragEventArgs e)
     {
-        
+        e.Effect = e.AllowedEffect;
     }
 
     private void tvData_DragDrop(object sender, DragEventArgs e)
     {
+        bool isRightMove = false;
         
+        Point targetPoint = tvData.PointToClient(new Point(e.X, e.Y));
+
+        TreeNode targetNode = tvData.GetNodeAt(targetPoint);
+        
+        TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+        Console.WriteLine(targetNode.Text);
+        Console.WriteLine(draggedNode.Text);
+        
+        var targetIsPerformer = _context.Performers.FirstOrDefault(p => p.Nickname == targetNode.Text);
+        var draggedIsAlbum = _context.Albums.FirstOrDefault(a => a.Title == draggedNode.Text);
+        
+        if (targetIsPerformer != null && draggedIsAlbum != null)
+        {
+            List<Song> songs = _context.Songs.Where(s => s.AlbumId == draggedIsAlbum.Id).ToList();
+            
+            int newPerformerId = targetIsPerformer.Id;
+            draggedIsAlbum.PerformerId = newPerformerId;
+
+            if (songs != null)
+            {
+                foreach (Song song in songs)
+                {
+                    song.AlbumId = draggedIsAlbum.Id;
+                }
+            }
+            
+            _context.SaveChanges();
+            isRightMove = true;
+        }
+
+        var targetIsAlbum = _context.Albums.FirstOrDefault(a => a.Title == targetNode.Text);
+        var draggedIsSong =  _context.Songs.FirstOrDefault(p => p.Title == draggedNode.Text);
+        
+        if (targetIsAlbum != null && draggedIsSong != null)
+        {
+            int newAlbumId = targetIsAlbum.Id;
+            draggedIsSong.AlbumId = newAlbumId;
+            _context.SaveChanges();
+            isRightMove = true;
+        }
+        
+        if (!draggedNode.Equals(targetNode) && !ContainsNode(draggedNode, targetNode) && isRightMove)
+        {
+            if (e.Effect == DragDropEffects.Move)
+            {
+                draggedNode.Remove();
+                targetNode.Nodes.Add(draggedNode);
+            }
+            
+            else if (e.Effect == DragDropEffects.Copy)
+            {
+                targetNode.Nodes.Add((TreeNode)draggedNode.Clone());
+            }
+            
+            targetNode.Expand();
+        }
     }
 
     private void tvData_DragOver(object sender, DragEventArgs e)
     {
+        Point targetPoint = tvData.PointToClient(new Point(e.X, e.Y));
         
+        tvData.SelectedNode = tvData.GetNodeAt(targetPoint);
+    }
+    
+    private bool ContainsNode(TreeNode node1, TreeNode node2)
+    {
+        if (node2.Parent == null) return false;
+        if (node2.Parent.Equals(node1)) return true;
+        
+        return ContainsNode(node1, node2.Parent);
     }
 }
