@@ -1,4 +1,7 @@
-using kpo_lab_2.Models;
+using kpo_lab_2.Database.Models;
+using kpo_lab_2.DataBase.Models;
+using kpo_lab_2.DataBase.Models;
+using ApplicationContext = kpo_lab_2.DataBase.ApplicationContext;
 
 namespace kpo_lab_2;
 
@@ -11,8 +14,6 @@ public partial class MainForm : Form
         _context = context;
         InitializeComponent();
     }
-
-    #region btnLoad
     
     private void btnLoad_LoadData(object sender, EventArgs e)
     {
@@ -80,8 +81,6 @@ public partial class MainForm : Form
         }
     }
     
-    #endregion
-
     private void ContextMenuItemAdd(object sender, EventArgs e)
     {
         if (tvData.SelectedNode == null)
@@ -379,9 +378,6 @@ public partial class MainForm : Form
         
         TreeNode draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
 
-        Console.WriteLine(targetNode.Text);
-        Console.WriteLine(draggedNode.Text);
-        
         var targetIsPerformer = _context.Performers.FirstOrDefault(p => p.Nickname == targetNode.Text);
         var draggedIsAlbum = _context.Albums.FirstOrDefault(a => a.Title == draggedNode.Text);
         

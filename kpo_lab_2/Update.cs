@@ -1,4 +1,5 @@
-﻿using kpo_lab_2.Models;
+﻿using kpo_lab_2.DataBase.Models;
+using ApplicationContext = kpo_lab_2.DataBase.ApplicationContext;
 
 namespace kpo_lab_2;
 

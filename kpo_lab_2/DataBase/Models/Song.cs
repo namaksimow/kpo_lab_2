@@ -1,4 +1,4 @@
-﻿namespace kpo_lab_2.Models;
+﻿namespace kpo_lab_2.Database.Models;
 
 public class Song
 {

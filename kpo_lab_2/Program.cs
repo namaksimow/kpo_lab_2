@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ApplicationContext = kpo_lab_2.DataBase.ApplicationContext;
 
 namespace kpo_lab_2;
 
@@ -18,6 +19,11 @@ static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm(context));
+        
+        AuthenticationAndRegistration authAndRegistration = new AuthenticationAndRegistration(context);
+        if (authAndRegistration.ShowDialog() == DialogResult.OK)
+        {
+            Application.Run(new MainForm(context)); 
+        }
     }
 }

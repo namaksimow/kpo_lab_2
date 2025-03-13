@@ -27,6 +27,12 @@
       <Compile Update="SongCreate.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="AuthenticationAndRegistration.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Registration.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
